@@ -92,12 +92,12 @@ subroutine transpose_x_to_y_real(src, dst, opt_decomp)
 end subroutine transpose_x_to_y_real
 
 
-subroutine transpose_x_to_y_real_start(handle, src, dst, sbuf, rbuf, &
+subroutine transpose_x_to_y_real_start(request, src, dst, sbuf, rbuf, &
      opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(OUT) :: request
   real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -123,29 +123,31 @@ subroutine transpose_x_to_y_real_start(handle, src, dst, sbuf, rbuf, &
 #ifdef EVEN
   call MPI_IALLTOALL(sbuf, decomp%x1count, real_type, &
        rbuf, decomp%y1count, real_type, &
-       DECOMP_2D_COMM_COL, handle, ierror)
+       DECOMP_2D_COMM_COL, request, ierror)
 #else
   call MPI_IALLTOALLV(sbuf, decomp%x1cnts, decomp%x1disp, real_type, &
        rbuf, decomp%y1cnts, decomp%y1disp, real_type, &
-       DECOMP_2D_COMM_COL, handle, ierror)
+       DECOMP_2D_COMM_COL, request, ierror)
 #endif
 
   return
 end subroutine transpose_x_to_y_real_start
 
 
-subroutine transpose_x_to_y_real_wait(handle, src, dst, sbuf, rbuf, &
+subroutine transpose_x_to_y_real_wait(request, src, dst, sbuf, rbuf, &
      opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(INOUT) :: request
   real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
   TYPE(DECOMP_INFO) :: decomp
 
   integer :: d1,d2,d3
+
+  TYPE(MPI_Status) :: status
   integer :: ierror
 
   if (present(opt_decomp)) then
@@ -158,7 +160,7 @@ subroutine transpose_x_to_y_real_wait(handle, src, dst, sbuf, rbuf, &
   d2 = SIZE(dst,2)
   d3 = SIZE(dst,3)
 
-  call MPI_WAIT(handle, ierror)
+  call MPI_WAIT(request, status, ierror)
 
   ! rearrange receive buffer
   call mem_merge_xy_real(rbuf, d1, d2, d3, dst, dims(1), &
@@ -248,12 +250,12 @@ subroutine transpose_x_to_y_complex(src, dst, opt_decomp)
 end subroutine transpose_x_to_y_complex
 
 
-subroutine transpose_x_to_y_complex_start(handle, src, dst, sbuf, &
+subroutine transpose_x_to_y_complex_start(request, src, dst, sbuf, &
      rbuf, opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(OUT) :: request
   complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -279,29 +281,31 @@ subroutine transpose_x_to_y_complex_start(handle, src, dst, sbuf, &
 #ifdef EVEN
   call MPI_IALLTOALL(sbuf, decomp%x1count, &
        complex_type, rbuf, decomp%y1count, &
-       complex_type, DECOMP_2D_COMM_COL, handle, ierror)
+       complex_type, DECOMP_2D_COMM_COL, request, ierror)
 #else
   call MPI_IALLTOALLV(sbuf, decomp%x1cnts, decomp%x1disp, &
        complex_type, rbuf, decomp%y1cnts, decomp%y1disp, &
-       complex_type, DECOMP_2D_COMM_COL, handle, ierror)
+       complex_type, DECOMP_2D_COMM_COL, request, ierror)
 #endif
 
   return
 end subroutine transpose_x_to_y_complex_start
 
 
-subroutine transpose_x_to_y_complex_wait(handle, src, dst, sbuf, &
+subroutine transpose_x_to_y_complex_wait(request, src, dst, sbuf, &
      rbuf, opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(INOUT) :: request
   complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
   TYPE(DECOMP_INFO) :: decomp
 
   integer :: d1,d2,d3
+
+  TYPE(MPI_Status) :: status
   integer :: ierror
 
   if (present(opt_decomp)) then
@@ -314,7 +318,7 @@ subroutine transpose_x_to_y_complex_wait(handle, src, dst, sbuf, &
   d2 = SIZE(dst,2)
   d3 = SIZE(dst,3)
 
-  call MPI_WAIT(handle, ierror)
+  call MPI_WAIT(handle, status, ierror)
 
   ! rearrange receive buffer
   call mem_merge_xy_complex(rbuf, d1, d2, d3, dst, dims(1), &

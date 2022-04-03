@@ -1558,13 +1558,17 @@ contains
 
 
   ! For non-blocking communication code, progress the comminication stack
-  subroutine transpose_test(handle)
+  subroutine transpose_test(request, flag)
 
     implicit none
 
-    integer :: handle, ierror
 
-    call MPI_TEST(handle,ierror)
+    TYPE(MPI_Request), INTENT(INOUT) :: request
+    LOGICAL, INTENT(OUT) :: flag
+    TYPE(MPI_Status) :: status
+    integer :: ierror
+
+    call MPI_TEST(request, flag, status, ierror)
 
     return
   end subroutine transpose_test

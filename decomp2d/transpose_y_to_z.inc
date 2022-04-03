@@ -104,12 +104,12 @@ subroutine transpose_y_to_z_real(src, dst, opt_decomp)
 end subroutine transpose_y_to_z_real
 
 
-subroutine transpose_y_to_z_real_start(handle, src, dst, sbuf, rbuf, &
+subroutine transpose_y_to_z_real_start(request, src, dst, sbuf, rbuf, &
      opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(OUT) :: request
   real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -135,28 +135,29 @@ subroutine transpose_y_to_z_real_start(handle, src, dst, sbuf, rbuf, &
 #ifdef EVEN
   call MPI_IALLTOALL(sbuf, decomp%y2count, real_type, &
        rbuf, decomp%z2count, real_type, &
-       DECOMP_2D_COMM_ROW, handle, ierror)
+       DECOMP_2D_COMM_ROW, request, ierror)
 #else
   call MPI_IALLTOALLV(sbuf, decomp%y2cnts, decomp%y2disp, real_type, &
        rbuf, decomp%z2cnts, decomp%z2disp, real_type, &
-       DECOMP_2D_COMM_ROW, handle, ierror)
+       DECOMP_2D_COMM_ROW, request, ierror)
 #endif
 
   return
 end subroutine transpose_y_to_z_real_start
 
 
-subroutine transpose_y_to_z_real_wait(handle, src, dst, sbuf, rbuf, &
+subroutine transpose_y_to_z_real_wait(request, src, dst, sbuf, rbuf, &
      opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(INOUT) :: request
   real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
   TYPE(DECOMP_INFO) :: decomp
 
+  TYPE(MPI_Status) :: status
   integer :: ierror
 
   if (present(opt_decomp)) then
@@ -165,7 +166,7 @@ subroutine transpose_y_to_z_real_wait(handle, src, dst, sbuf, rbuf, &
      decomp = decomp_main
   end if
 
-  call MPI_WAIT(handle, ierror)
+  call MPI_WAIT(request, status, ierror)
 
   dst = rbuf
 
@@ -265,12 +266,12 @@ subroutine transpose_y_to_z_complex(src, dst, opt_decomp)
 end subroutine transpose_y_to_z_complex
 
 
-subroutine transpose_y_to_z_complex_start(handle, src, dst, sbuf, &
+subroutine transpose_y_to_z_complex_start(request, src, dst, sbuf, &
      rbuf, opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(OUT) :: request
   complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -296,28 +297,29 @@ subroutine transpose_y_to_z_complex_start(handle, src, dst, sbuf, &
 #ifdef EVEN
   call MPI_IALLTOALL(sbuf, decomp%y2count, &
        complex_type, rbuf, decomp%z2count, &
-       complex_type, DECOMP_2D_COMM_ROW, handle, ierror)
+       complex_type, DECOMP_2D_COMM_ROW, request, ierror)
 #else
   call MPI_IALLTOALLV(sbuf, decomp%y2cnts, decomp%y2disp, &
        complex_type, rbuf,decomp%z2cnts, decomp%z2disp, &
-       complex_type, DECOMP_2D_COMM_ROW, handle, ierror)
+       complex_type, DECOMP_2D_COMM_ROW, request, ierror)
 #endif
 
   return
 end subroutine transpose_y_to_z_complex_start
 
 
-subroutine transpose_y_to_z_complex_wait(handle, src, dst, sbuf, &
+subroutine transpose_y_to_z_complex_wait(request, src, dst, sbuf, &
      rbuf, opt_decomp)
 
   implicit none
 
-  integer :: handle
+  TYPE(MPI_Request), INTENT(INOUT) :: request
   complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
   TYPE(DECOMP_INFO) :: decomp
 
+  TYPE(MPI_Status) :: status
   integer :: ierror
 
   if (present(opt_decomp)) then
@@ -326,7 +328,7 @@ subroutine transpose_y_to_z_complex_wait(handle, src, dst, sbuf, &
      decomp = decomp_main
   end if
 
-  call MPI_WAIT(handle, ierror)
+  call MPI_WAIT(request, status, ierror)
 
   dst = rbuf
 
