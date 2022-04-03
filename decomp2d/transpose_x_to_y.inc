@@ -318,7 +318,7 @@ subroutine transpose_x_to_y_complex_wait(request, src, dst, sbuf, &
   d2 = SIZE(dst,2)
   d3 = SIZE(dst,3)
 
-  call MPI_WAIT(handle, status, ierror)
+  call MPI_WAIT(request, status, ierror)
 
   ! rearrange receive buffer
   call mem_merge_xy_complex(rbuf, d1, d2, d3, dst, dims(1), &
