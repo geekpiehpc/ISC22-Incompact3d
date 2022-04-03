@@ -109,7 +109,7 @@ subroutine transpose_z_to_y_real_start(request, src, dst, sbuf, rbuf, &
 
   implicit none
 
-  TYPE(MPI_Request), INTENT(OUT) :: request
+  integer, INTENT(OUT) :: request
   real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -144,7 +144,7 @@ subroutine transpose_z_to_y_real_wait(request, src, dst, sbuf, rbuf, &
 
   implicit none
 
-  TYPE(MPI_Request), INTENT(INOUT) :: request
+  integer, INTENT(INOUT) :: request
   real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -152,7 +152,7 @@ subroutine transpose_z_to_y_real_wait(request, src, dst, sbuf, rbuf, &
 
   integer :: d1,d2,d3
 
-  TYPE(MPI_Status) :: status
+  integer :: status(MPI_STATUS_SIZE)
   integer :: ierror
 
   if (present(opt_decomp)) then
@@ -272,7 +272,7 @@ subroutine transpose_z_to_y_complex_start(request, src, dst, sbuf, &
 
   implicit none
 
-  TYPE(MPI_Request), INTENT(OUT) :: request
+  integer, INTENT(OUT) :: request
   complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -307,7 +307,7 @@ subroutine transpose_z_to_y_complex_wait(request, src, dst, sbuf, &
 
   implicit none
 
-  TYPE(MPI_Request), INTENT(INOUT) :: request
+  integer, INTENT(INOUT) :: request
   complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
   TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -315,7 +315,7 @@ subroutine transpose_z_to_y_complex_wait(request, src, dst, sbuf, &
 
   integer :: d1,d2,d3
 
-  TYPE(MPI_Status) :: status
+  integer :: status(MPI_STATUS_SIZE)
   integer :: ierror
 
   if (present(opt_decomp)) then

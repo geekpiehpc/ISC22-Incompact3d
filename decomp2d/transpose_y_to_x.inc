@@ -96,7 +96,7 @@ opt_decomp)
 
 implicit none
 
-TYPE(MPI_Request), INTENT(OUT) :: request
+integer, INTENT(OUT) :: request
 real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
 TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -138,7 +138,7 @@ opt_decomp)
 
 implicit none
 
-TYPE(MPI_Request), INTENT(INOUT) :: request
+integer, INTENT(INOUT) :: request
 real(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
 TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -146,7 +146,7 @@ TYPE(DECOMP_INFO) :: decomp
 
 integer :: d1,d2,d3
 
-TYPE(MPI_Status) :: status
+integer :: status(MPI_STATUS_SIZE)
 integer :: ierror
 
 if (present(opt_decomp)) then
@@ -254,7 +254,7 @@ rbuf, opt_decomp)
 
 implicit none
 
-TYPE(MPI_Request), INTENT(OUT) :: request
+integer, INTENT(OUT) :: request
 complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
 TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -296,7 +296,7 @@ rbuf, opt_decomp)
 
 implicit none
 
-TYPE(MPI_Request), INTENT(INOUT) :: request
+integer, INTENT(INOUT) :: request
 complex(mytype), dimension(:,:,:) :: src, dst, sbuf, rbuf
 TYPE(DECOMP_INFO), intent(IN), optional :: opt_decomp
 
@@ -304,7 +304,7 @@ TYPE(DECOMP_INFO) :: decomp
 
 integer :: d1,d2,d3
 
-TYPE(MPI_Status) :: status
+integer :: status(MPI_STATUS_SIZE)
 integer :: ierror
 
 if (present(opt_decomp)) then

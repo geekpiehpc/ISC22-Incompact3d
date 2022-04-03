@@ -1563,9 +1563,9 @@ contains
     implicit none
 
 
-    TYPE(MPI_Request), INTENT(INOUT) :: request
+    integer, INTENT(INOUT) :: request
     LOGICAL, INTENT(OUT) :: flag
-    TYPE(MPI_Status) :: status
+    integer :: status(MPI_STATUS_SIZE)
     integer :: ierror
 
     call MPI_TEST(request, flag, status, ierror)
