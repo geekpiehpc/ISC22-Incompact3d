@@ -160,13 +160,11 @@ module decomp_2d
   public :: decomp_2d_init, decomp_2d_finalize, &
        transpose_x_to_y, transpose_y_to_z, &
        transpose_z_to_y, transpose_y_to_x, &
-#ifdef OCC
        transpose_x_to_y_start, transpose_y_to_z_start, &
        transpose_z_to_y_start, transpose_y_to_x_start, &
        transpose_x_to_y_wait, transpose_y_to_z_wait, &
        transpose_z_to_y_wait, transpose_y_to_x_wait, &
        transpose_test, &
-#endif
        decomp_info_init, decomp_info_finalize, partition, &
        init_coarser_mesh_statS,fine_to_coarseS,&
        init_coarser_mesh_statV,fine_to_coarseV,&
@@ -213,7 +211,6 @@ module decomp_2d
      module procedure transpose_y_to_x_complex
   end interface transpose_y_to_x
 
-#ifdef OCC
   interface transpose_x_to_y_start
      module procedure transpose_x_to_y_real_start
      module procedure transpose_x_to_y_complex_start
@@ -253,7 +250,6 @@ module decomp_2d
      module procedure transpose_y_to_x_real_wait
      module procedure transpose_y_to_x_complex_wait
   end interface transpose_y_to_x_wait
-#endif
 
   interface update_halo
      module procedure update_halo_real
@@ -1561,7 +1557,6 @@ contains
 #endif
 
 
-#ifdef OCC
   ! For non-blocking communication code, progress the comminication stack
   subroutine transpose_test(handle)
 
@@ -1569,11 +1564,10 @@ contains
 
     integer :: handle, ierror
 
-    call NBC_TEST(handle,ierror)
+    call MPI_TEST(handle,ierror)
 
     return
   end subroutine transpose_test
-#endif
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

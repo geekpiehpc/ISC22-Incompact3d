@@ -39,3 +39,6 @@ test*
 checkpoint
 restart*
 forces.dat*
+cmake-build-debug
+.idea
+.vscode
