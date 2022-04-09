@@ -46,7 +46,7 @@ contains
     INTEGER :: nlock, poissiter
     LOGICAL :: converged
     REAL(mytype) :: atol, rtol, rho0, divup3norm
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
 #endif
 
@@ -87,13 +87,13 @@ contains
        ENDIF
 
        IF (.NOT.converged) THEN
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
           avg_param = zero
           call avg3d (pp3(:,:,:,1), avg_param)
           if (nrank == 0) write(*,*)'## Solve Poisson before1 pp3', avg_param
 #endif
           CALL poisson(pp3(:,:,:,1))
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
           avg_param = zero
           call avg3d (pp3(:,:,:,1), avg_param)
           if (nrank == 0) write(*,*)'## Solve Poisson after call  pp3', avg_param
@@ -101,7 +101,7 @@ contains
 
           !! Need to update pressure gradient here for varcoeff
           CALL gradp(px1,py1,pz1,pp3(:,:,:,1))
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
           avg_param = zero
           call avg3d (pp3(:,:,:,1), avg_param)
           if (nrank == 0) write(*,*)'## Solve Poisson pp3', avg_param
@@ -210,11 +210,11 @@ contains
 
     real(mytype),dimension(xsize(1),xsize(2),xsize(3)) :: ux,uy,uz
     real(mytype),dimension(xsize(1),xsize(2),xsize(3)),intent(in) :: px,py,pz
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
 #endif
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (ux, avg_param)
     if (nrank == 0) write(*,*)'## Cor Vel ux', avg_param
@@ -512,7 +512,7 @@ contains
     integer :: code
     integer, dimension(2) :: dims, dummy_coords
     logical, dimension(2) :: dummy_periods
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
 #endif
 
@@ -724,7 +724,7 @@ contains
           enddo
        endif
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (ux, avg_param)
     if (nrank == 0) write(*,*)'## Pres corr ux ', avg_param

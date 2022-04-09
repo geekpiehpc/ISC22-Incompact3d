@@ -72,7 +72,7 @@ subroutine parameter(input_i3d)
   NAMELIST/ALMParam/iturboutput,NTurbines,TurbinesPath,NActuatorlines,ActuatorlinesPath,eps_factor,rho_air
   NAMELIST/ADMParam/Ndiscs,ADMcoords,C_T,aind,iturboutput,rho_air
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
   if (nrank == 0) write(*,*) '# parameter start'
 #endif
 
@@ -303,7 +303,7 @@ subroutine parameter(input_i3d)
   !###########################################################################
   if (nrank==0) call system('mkdir data out probes 2> /dev/null')
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
   if (nrank == 0) write(*,*) '# parameter input.i3d done'
 #endif
   if (nrank==0) then
@@ -533,7 +533,7 @@ subroutine parameter(input_i3d)
      npif=npif+1
   endif
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
   if (nrank == 0) write(*,*) '# parameter done'
 #endif
 

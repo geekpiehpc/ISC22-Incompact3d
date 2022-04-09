@@ -20,7 +20,7 @@ subroutine schemes()
 
   integer :: is
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
   if (nrank  ==  0) write(*,*)'# schemes start'
 #endif
 
@@ -196,7 +196,7 @@ subroutine schemes()
      call implicit_schemes()
   endif
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
   if (nrank  ==  0) write(*,*)'# schemes end'
 #endif
 

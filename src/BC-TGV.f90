@@ -133,7 +133,7 @@ contains
        enddo
     enddo
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank  ==  0) write(*,*) '# init end ok'
 #endif
 
@@ -215,7 +215,7 @@ contains
        end do
     end do
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank == 0) write(*,*) '# init_post ok'
 #endif
 

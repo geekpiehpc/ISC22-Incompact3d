@@ -276,7 +276,7 @@ contains
        enddo
     enddo
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*) '# init end ok'
 #endif
 

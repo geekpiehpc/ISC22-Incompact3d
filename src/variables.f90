@@ -82,7 +82,7 @@ contains
 
     TYPE(DECOMP_INFO), save :: ph! decomposition object
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank == 0) write(*,*) '# Init_variables start'
 #endif
 
@@ -1363,7 +1363,7 @@ contains
     allocate(h_2(xsize(3)))
     h_2=zero
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank ==  0) write(*,*) '# init_variables done'
 #endif
     return

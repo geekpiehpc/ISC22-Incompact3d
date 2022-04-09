@@ -29,7 +29,7 @@ contains
     use param
     use MPI
     use dbg_schemes, only: exp_prec, abs_prec, sqrt_prec
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     use tools, only : avg3d
 #endif
     
@@ -57,7 +57,7 @@ contains
     real(mytype), dimension(3) :: dim_min, dim_max
     real( kind = 8 ) :: r8_random
     external r8_random, return_30k
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
 #endif
 
@@ -250,7 +250,7 @@ contains
        enddo
     enddo
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (ux1, avg_param)
     if (nrank == 0) write(*,*)'## SUB Channel Init ux_avg ', avg_param

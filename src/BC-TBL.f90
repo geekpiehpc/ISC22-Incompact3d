@@ -64,7 +64,7 @@ contains
        enddo
     enddo
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank  ==  0) write(*,*) '# init end ok'
 #endif
 
@@ -270,7 +270,7 @@ contains
     f_bl_inf=f_bl_inf+(1-exp_prec(-delta_eta/delta_int))*eps_eta
     f_bl_inf=f_bl_inf/1.0002014996204402_mytype/1.0000000359138641_mytype !To assure 1.0 in infinity
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank == 0) write(*,*)'f_bl_inf ', f_bl_inf
 #endif
 
@@ -292,7 +292,7 @@ contains
 
     g_bl_inf=g_bl_inf+(1-exp_prec(-delta_eta/delta_int))*eps_eta
     g_bl_inf=g_bl_inf/1.000546554_mytype
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank == 0) write(*,*)'g_bl_inf ', g_bl_inf
 #endif
 

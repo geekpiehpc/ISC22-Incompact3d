@@ -51,7 +51,7 @@ program xcompact3d
           endif
         endif
         call calculate_transeq_rhs(drho1,dux1,duy1,duz1,dphi1,rho1,ux1,uy1,uz1,ep1,phi1,divu3)
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
         call check_transients()
 #endif
         

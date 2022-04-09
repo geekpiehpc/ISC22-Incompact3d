@@ -55,7 +55,7 @@ contains
     real(mytype),dimension(xsize(1),xsize(2),xsize(3)) :: ux1,uy1,uz1,ep1
     integer :: i,j,k
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank  ==  0) write(*,*) '# body start'
 #endif
 
@@ -69,7 +69,7 @@ contains
       enddo
     enddo
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank  ==  0) write(*,*) '# body done'
 #endif
 

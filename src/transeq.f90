@@ -74,7 +74,7 @@ contains
     use var, only : FTx, FTy, FTz, Fdiscx, Fdiscy, Fdiscz
     use ibm_param, only : ubcx,ubcy,ubcz
     use les, only : compute_SGS
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     use tools, only : avg3d
 #endif
 
@@ -92,7 +92,7 @@ contains
     !! OUTPUTS
     real(mytype),dimension(xsize(1),xsize(2),xsize(3),ntime) :: dux1,duy1,duz1
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
 #endif
     
@@ -110,7 +110,7 @@ contains
       tc1(:,:,:) = ux1(:,:,:) * uz1(:,:,:)
     endif
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (ta1, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR ta1 (uu) AVG ', avg_param
@@ -123,7 +123,7 @@ contains
     call derx (tb1,uy1,di1,sx,ffxp,fsxp,fwxp,xsize(1),xsize(2),xsize(3),1,ubcy)
     call derx (tc1,uz1,di1,sx,ffxp,fsxp,fwxp,xsize(1),xsize(2),xsize(3),1,ubcz)
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (ta1, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR ta1 (du) AVG ', avg_param
@@ -140,7 +140,7 @@ contains
       ti1(:,:,:) = tf1(:,:,:) + ux1(:,:,:) * tc1(:,:,:)
     endif
     ! TODO: save the x-convective terms already in dux1, duy1, duz1
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (tg1, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR tg1 (duu+udu) AVG ', avg_param
@@ -157,7 +157,7 @@ contains
     call transpose_x_to_y(ux1,ux2)
     call transpose_x_to_y(uy1,uy2)
     call transpose_x_to_y(uz1,uz2)
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (ux2, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR ux2 (transpose) AVG ', avg_param
@@ -183,7 +183,7 @@ contains
       te2(:,:,:) = uy2(:,:,:) * uy2(:,:,:)
       tf2(:,:,:) = uz2(:,:,:) * uy2(:,:,:)
     endif
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (td2, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR td2 (uu) AVG ', avg_param
@@ -196,7 +196,7 @@ contains
     call dery (te2,uy2,di2,sy,ffy,fsy,fwy,ppy,ysize(1),ysize(2),ysize(3),0,ubcy)
     call dery (tf2,uz2,di2,sy,ffyp,fsyp,fwyp,ppy,ysize(1),ysize(2),ysize(3),1,ubcz)
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (td2, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR td2 (du) AVG ', avg_param
@@ -212,7 +212,7 @@ contains
       th2(:,:,:) = th2(:,:,:) + uy2(:,:,:) * te2(:,:,:)
       ti2(:,:,:) = ti2(:,:,:) + uy2(:,:,:) * tf2(:,:,:)
     endif
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (tg2, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR tg2 (duu+udu) AVG ', avg_param
@@ -244,7 +244,7 @@ contains
        te3(:,:,:) = uy3(:,:,:) * uz3(:,:,:)
        tf3(:,:,:) = uz3(:,:,:) * uz3(:,:,:)
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (td3, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR td3 (uu) AVG ', avg_param
@@ -280,7 +280,7 @@ contains
        tb3(:,:,:) = tb3(:,:,:) + rho3(:,:,:) * uy3(:,:,:) * divu3(:,:,:)
        tc3(:,:,:) = tc3(:,:,:) + rho3(:,:,:) * uz3(:,:,:) * divu3(:,:,:)
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (ta3, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR ta3 (duu+udu) AVG ', avg_param
@@ -317,7 +317,7 @@ contains
     tg2(:,:,:) = td2(:,:,:) - half * tg2(:,:,:)
     th2(:,:,:) = te2(:,:,:) - half * th2(:,:,:)
     ti2(:,:,:) = tf2(:,:,:) - half * ti2(:,:,:)
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (tg2, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR tg2 (Conv+Diff)) AVG ', avg_param
@@ -403,7 +403,7 @@ contains
           
        endif
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (td2, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR td2 (Diff Y) AVG ', avg_param
@@ -446,7 +446,7 @@ contains
       te1(:,:,:) = xnu * te1(:,:,:)
       tf1(:,:,:) = xnu * tf1(:,:,:)
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (td1, avg_param)
     if (nrank == 0) write(*,*)'## SUB momentum_rhs_eq VAR td1 (Diff X) AVG ', avg_param
@@ -462,7 +462,7 @@ contains
     dux1(:,:,:,1) = ta1(:,:,:) - half*tg1(:,:,:)  + td1(:,:,:)
     duy1(:,:,:,1) = tb1(:,:,:) - half*th1(:,:,:)  + te1(:,:,:)
     duz1(:,:,:,1) = tc1(:,:,:) - half*ti1(:,:,:)  + tf1(:,:,:)
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (dux1, avg_param)
     if (nrank == 0) write(*,*)'## MomRHS dux1 ', avg_param
@@ -476,7 +476,7 @@ contains
     if (ilmn) then
        call momentum_full_viscstress_tensor(dux1(:,:,:,1), duy1(:,:,:,1), duz1(:,:,:,1), divu3, mu1)
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (dux1, avg_param)
     if (nrank == 0) write(*,*)'## MomRHS VisTau dux1 ', avg_param
@@ -501,7 +501,7 @@ contains
        duy1(:,:,:,1) = duy1(:,:,:,1) + sgsy1(:,:,:)
        duz1(:,:,:,1) = duz1(:,:,:,1) + sgsz1(:,:,:)
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (dux1, avg_param)
     if (nrank == 0) write(*,*)'## MomRHS LES dux1 ', avg_param
@@ -524,7 +524,7 @@ contains
         call momentum_gravity(dux1, duy1, duz1, phi1(:,:,:,is), ri(is))
       enddo
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (dux1, avg_param)
     if (nrank == 0) write(*,*)'## MomRHS ILMN dux1 ', avg_param
@@ -537,7 +537,7 @@ contains
 #endif
     !! Additional forcing
     call momentum_forcing(dux1, duy1, duz1, rho1, ux1, uy1, uz1, phi1)
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (dux1, avg_param)
     if (nrank == 0) write(*,*)'## MomRHS Forc dux1 ', avg_param
@@ -559,7 +559,7 @@ contains
        duy1(:,:,:,1)=duy1(:,:,:,1)+Fdiscy(:,:,:)/rho_air
        duz1(:,:,:,1)=duz1(:,:,:,1)+Fdiscz(:,:,:)/rho_air
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (dux1, avg_param)
     if (nrank == 0) write(*,*)'## MomRHS Turb dux1 ', avg_param
@@ -576,7 +576,7 @@ contains
        call tbl_tripping(duy1(:,:,:,1),td1)
        if ((nrank==0).and.(mod(itime,ilist)==0)) write(*,*) 'TRIPPING!!'
     endif
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (dux1, avg_param)
     if (nrank == 0) write(*,*)'## MomRHS Trip dux1 ', avg_param

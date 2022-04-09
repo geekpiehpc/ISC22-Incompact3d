@@ -237,7 +237,7 @@ contains
        endif
     endif
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank  ==  0) write(*,*) '# init end ok'
 #endif
 

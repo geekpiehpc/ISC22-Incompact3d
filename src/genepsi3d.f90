@@ -19,7 +19,7 @@ contains
     real(mytype),dimension(xsize(1),xsize(2),xsize(3)) :: ep1
     logical :: dir_exists
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# body_init start'
 #endif
     !###################################################################
@@ -35,7 +35,7 @@ contains
     ep1(:,:,:)=zero
     call geomcomplex(ep1,xstart(1),xend(1),ny,xstart(2),xend(2),xstart(3),xend(3),dx,yp,dz,one)
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# body_init done'
 #endif
 

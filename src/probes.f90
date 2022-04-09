@@ -86,7 +86,7 @@ contains
 
     if (nprobes.le.0) return
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank == 0) print *,'# init_probes start'
 #endif
 
@@ -238,7 +238,7 @@ contains
       allocate(dfdz(nprobes, 3+numscalar))
     endif
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank == 0) print *,'# init_probes ok'
 #endif
 

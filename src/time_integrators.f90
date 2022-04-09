@@ -18,7 +18,7 @@ contains
     use variables
     use decomp_2d
     use ydiff_implicit, only : inttimp
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     use tools, only : avg3d
 #endif
 
@@ -35,11 +35,11 @@ contains
     !! LOCAL
     integer :: is, code, ierror
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
 #endif
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (var1, avg_param)
     if (nrank == 0) write(*,*)'## SUB intt VAR var1 (start) AVG ', avg_param
@@ -172,7 +172,7 @@ contains
 
     endif
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (var1, avg_param)
     if (nrank == 0) write(*,*)'## SUB intt VAR var1 AVG ', avg_param
@@ -206,7 +206,7 @@ contains
     use param, only : scalar_lbound, scalar_ubound
     use variables, only : numscalar,nu0nu
     use var, only : ta1, tb1
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     use tools, only : avg3d
 #endif
 
@@ -223,13 +223,13 @@ contains
 
     !! LOCAL
     integer :: is, i, j, k
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
     if (nrank .eq. 0) write(*,*)'## Init int_time'
 #endif
 
     call int_time_momentum(ux1, uy1, uz1, dux1, duy1, duz1)
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
      avg_param = zero
      call avg3d (dux1, avg_param)
      if (nrank == 0) write(*,*)'## int_time dux1 ', avg_param
@@ -303,7 +303,7 @@ contains
        ENDIF
     ENDIF
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'## End  int_time'
 #endif
 

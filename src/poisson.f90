@@ -114,7 +114,7 @@ contains
     if (bcy==1) ny=ny-1
     if (bcz==1) nz=nz-1
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# decomp_2d_poisson_init start'
 #endif
 
@@ -123,14 +123,14 @@ contains
     allocate(az(nz),bz(nz))
     call abxyz(ax,ay,az,bx,by,bz,nx,ny,nz,bcx,bcy,bcz)
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# decomp_2d_poisson_init decomp_info_init'
 #endif
 
     call decomp_info_init(nx, ny, nz, ph)
     call decomp_info_init(nx, ny, nz/2+1, sp)
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# decomp_2d_poisson_init decomp_info_init ok'
 #endif
 
@@ -210,7 +210,7 @@ contains
        allocate(a3(sp%yst(1):sp%yen(1),nym,sp%yst(3):sp%yen(3),5))      
     end if
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# decomp_2d_poisson_init before waves'
 #endif
 
@@ -246,7 +246,7 @@ contains
     !write(*,*) 'POinit ii5 a3iy ', iy(a3(5,5,5,1)),iy(a3(5,5,5,2)),iy(a3(5,5,5,3)),&
     !                               iy(a3(5,5,5,4)),iy(a3(5,5,5,5))
 
-#ifdef DEBG 
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# decomp_2d_poisson_init end'
 #endif
 
@@ -466,7 +466,7 @@ contains
     ! normalisation
     cw1 = cw1 / real(nx, kind=mytype) /real(ny, kind=mytype) &
          / real(nz, kind=mytype)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3), sp%xen(3)
        do j = sp%xst(2), sp%xen(2)
           do i = sp%xst(1), sp%xen(1)
@@ -488,7 +488,7 @@ contains
              tmp2 = iy(cw1(i,j,k))
              cw1(i,j,k) = cx(tmp1 * bz(k) + tmp2 * az(k), &
                              tmp2 * bz(k) - tmp1 * az(k))
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'after z',i,j,k,cw1(i,j,k)
 #endif
@@ -505,7 +505,7 @@ contains
              cw1(i,j,k) = cx(tmp1 * by(j) + tmp2 * ay(j), &
                              tmp2 * by(j) - tmp1 * ay(j))
              if (j > (ny/2+1)) cw1(i,j,k) = -cw1(i,j,k)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'after y',i,j,k,cw1(i,j,k)
 #endif
@@ -535,7 +535,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3), sp%xen(3)
        do j = sp%xst(2), sp%xen(2)
           do i = sp%xst(1), sp%xen(1)
@@ -566,7 +566,7 @@ contains
              if ((abs_prec(tmp1) >= epsilon).and.(abs_prec(tmp2) >= epsilon)) then
                 cw1b(i,j,k)=cx(rl(cw1b(i,j,k)) / (-tmp1), iy(cw1b(i,j,k)) / (-tmp2))
              end if
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1b(i,j,k)) > 1.0e-4) &
                   write(*,100) 'AFTER',i,j,k,cw1b(i,j,k)
 #endif
@@ -598,7 +598,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3),sp%xen(3)
        do j = sp%xst(2),sp%xen(2)
           do i = sp%xst(1),sp%xen(1)
@@ -619,7 +619,7 @@ contains
              cw1(i,j,k) = cx(tmp1 * by(j) - tmp2 * ay(j), &
                              tmp2 * by(j) + tmp1 * ay(j))
              if (j > (ny/2+1)) cw1(i,j,k) = -cw1(i,j,k)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'AFTER Y',i,j,k,cw1(i,j,k)
 #endif
@@ -635,7 +635,7 @@ contains
              tmp2 = iy(cw1(i,j,k))
              cw1(i,j,k) = cx(tmp1 * bz(k) - tmp2 * az(k), &
                              tmp2 * bz(k) + tmp1 * az(k))
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'END',i,j,k,cw1(i,j,k)
 #endif
@@ -697,7 +697,7 @@ contains
     ny = ny_global - 1
     nz = nz_global
 
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     if (nrank .eq. 0) write(*,*)'# Poisoon_010 Init'
 #endif
     ! rhs is in Z-pencil but requires global operations in Y
@@ -724,7 +724,7 @@ contains
     ! normalisation
     cw1 = cw1 / real(nx, kind=mytype) /real(ny, kind=mytype) &
          / real(nz, kind=mytype)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3), sp%xen(3)
        do j = sp%xst(2), sp%xen(2)
           do i = sp%xst(1), sp%xen(1)
@@ -746,7 +746,7 @@ contains
              tmp2 = iy(cw1(i,j,k))
              cw1(i,j,k) = cx(tmp1 * bz(k) + tmp2 * az(k), &
                              tmp2 * bz(k) - tmp1 * az(k))
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'after z',i,j,k,cw1(i,j,k)
 #endif
@@ -763,7 +763,7 @@ contains
              cw1(i,j,k) = cx(tmp1 * bx(i) + tmp2 * ax(i), &
                              tmp2 * bx(i) - tmp1 * ax(i))
              if (i.gt.(nx/2+1)) cw1(i,j,k)=-cw1(i,j,k)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'after x',i,j,k,cw1(i,j,k)
 #endif
@@ -796,7 +796,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%yst(3), sp%yen(3)
        do j = sp%yst(2), sp%yen(2)
           do i = sp%yst(1), sp%yen(1)
@@ -923,7 +923,7 @@ contains
           endif
        enddo
     enddo
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%yst(3), sp%yen(3)
        do j = sp%yst(2), sp%yen(2)
           do i = sp%yst(1), sp%yen(1)
@@ -962,7 +962,7 @@ contains
 
     ! Back to X-pencil
     call transpose_y_to_x(cw2,cw1,sp)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3),sp%xen(3)
        do j = sp%xst(2),sp%xen(2)
           do i = sp%xst(1),sp%xen(1)
@@ -983,7 +983,7 @@ contains
              cw1(i,j,k) = cx(tmp1 * bx(i) - tmp2 * ax(i), &
                              tmp2 * bx(i) + tmp1 * ax(i))
              if (i > (nx/2 + 1)) cw1(i,j,k) = -cw1(i,j,k)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'AFTER X',i,j,k,cw1(i,j,k)
 #endif
@@ -999,7 +999,7 @@ contains
              tmp2 = iy(cw1(i,j,k))
              cw1(i,j,k) = cx(tmp1 * bz(k) - tmp2 * az(k), &
                              tmp2 * bz(k) + tmp1 * az(k))
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'END',i,j,k,cw1(i,j,k)
 #endif
@@ -1051,7 +1051,7 @@ contains
     complex(mytype) :: cx
     real(mytype) :: rl, iy
     external cx, rl, iy
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     real(mytype) avg_param
 #endif
 
@@ -1093,7 +1093,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (rw2b, avg_param)
     if (nrank == 0) write(*,*)'## Poisson11X Start rw2 ', avg_param
@@ -1112,7 +1112,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (rw1b, avg_param)
     if (nrank == 0) write(*,*)'## Poisson11X Start rw1 ', avg_param
@@ -1134,7 +1134,7 @@ contains
     ! normalisation
     cw1 = cw1 / real(nx, kind=mytype) /real(ny, kind=mytype) &
          / real(nz, kind=mytype)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3),sp%xen(3)
        do j = sp%xst(2),sp%xen(2)
           do i = sp%xst(1),sp%xen(1)
@@ -1156,14 +1156,14 @@ contains
              tmp2 = iy(cw1(i,j,k))
              cw1(i,j,k) = cx(tmp1 * bz(k) + tmp2 * az(k), &
                              tmp2 * bz(k) - tmp1 * az(k))
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'after z',i,j,k,cw1(i,j,k)
 #endif
           end do
        end do
     end do
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (abs(cw1), avg_param)
     if (nrank == 0) write(*,*)'## Poisson11X Post in Z cw1 ', avg_param
@@ -1193,7 +1193,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBG
+#ifdef DEBG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (abs(cw2), avg_param)
     if (nrank == 0) write(*,*)'## Poisson11X Post in Y cw2 ', avg_param
@@ -1201,7 +1201,7 @@ contains
 
     ! back to X-pencil
     call transpose_y_to_x(cw2b,cw1,sp)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3), sp%xen(3)
        do j = sp%xst(2), sp%xen(2)
           do i = sp%xst(1), sp%xen(1)
@@ -1239,7 +1239,7 @@ contains
        end do
     end do
 
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3), sp%xen(3)
        do j = sp%xst(2), sp%xen(2)
           do i = sp%xst(1), sp%xen(1)
@@ -1278,7 +1278,7 @@ contains
              end do
           end do
        end do
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
        avg_param = zero
        call avg3d (cw1b, avg_param)
        if (nrank == 0) write(*,*)'## Poisson11X Solve Pois istret 0 ', avg_param
@@ -1349,7 +1349,7 @@ contains
                 enddo
              enddo
           enddo
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
           avg_param = zero
           call avg3d (cw2b, avg_param)
           if (nrank == 0) write(*,*)'## Poisson11X Solve Pois istret < 3 ', avg_param
@@ -1374,7 +1374,7 @@ contains
              enddo
           enddo
        endif
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
           avg_param = zero
           call avg3d (cw2b, avg_param)
           if (nrank == 0) write(*,*)'## Poisson11X Solve Pois istret = 3 ', avg_param
@@ -1383,7 +1383,7 @@ contains
        call transpose_y_to_x(cw2b,cw1b,sp)
     endif
 
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3),sp%xen(3)
        do j = sp%xst(2),sp%xen(2)
           do i = sp%xst(1),sp%xen(1)
@@ -1421,7 +1421,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%xst(3), sp%xen(3)
        do j = sp%xst(2), sp%xen(2)
           do i = sp%xst(1), sp%xen(1)
@@ -1460,7 +1460,7 @@ contains
           end do
        end do
     end do
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     do k = sp%yst(3), sp%yen(3)
        do j = sp%yst(2), sp%yen(2)
           do i = sp%yst(1), sp%yen(1)
@@ -1485,14 +1485,14 @@ contains
              tmp2 = iy(cw1(i,j,k))
              cw1(i,j,k) = cx(tmp1 * bz(k) - tmp2 * az(k), &
                              tmp2 * bz(k) + tmp1 * az(k))
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
              if (abs_prec(cw1(i,j,k)) > 1.0e-4) &
                   write(*,100) 'END',i,j,k,cw1(i,j,k)
 #endif
           end do
        end do
     end do
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (cw1, avg_param)
     if (nrank == 0) write(*,*)'## Poisson11X Solve Pois POSTPR Z ', avg_param
@@ -1500,7 +1500,7 @@ contains
 
     ! compute c2r transform, back to physical space
     call decomp_2d_fft_3d(cw1,rhs)
-#ifdef DEBUG
+#ifdef DEBUG_DISABLED_AT_APR_9
     avg_param = zero
     call avg3d (rhs, avg_param)
     if (nrank == 0) write(*,*)'## Poisson11X Solve Pois Back Phy RHS ', avg_param
