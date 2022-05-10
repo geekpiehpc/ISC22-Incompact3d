@@ -25,6 +25,7 @@ if (${FFT_Choice} MATCHES "fftw3")
 elseif (${FFT_Choice} MATCHES "mkl")
     target_include_directories(decomp2d PUBLIC "$ENV{MKLROOT}/include")
     target_link_libraries(decomp2d PUBLIC
+            pthread
             -Wl,--start-group
             "$ENV{MKLROOT}/lib/intel64/libmkl_intel_lp64.a"
             "$ENV{MKLROOT}/lib/intel64/libmkl_sequential.a"
